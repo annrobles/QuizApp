@@ -9,19 +9,23 @@ import UIKit
 
 class QuestionViewController: ViewController {
     
-    var questionNum = 0
-    var currentQuestion = Question()
-    var selectedOption: Int?
     var score = 0
-    
+    var questionNum = 0
+    var selectedOption: Int?
+    var selectedOptions:[Int] = []
+    var currentQuestion = Question()
     let letterChoices = ["A", "B", "C", "D"]
     
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var recyclingInfoLabel: UILabel!
+    @IBOutlet weak var progressViewLabel: UILabel!
     @IBOutlet weak var questionUIImage: UIImageView!
     @IBOutlet weak var continueBtn: UIButton!
+    @IBOutlet weak var okBtn: UIButton!
+    
+    @IBOutlet weak var progressView: UIProgressView!
     
     @IBOutlet weak var questionUIImageHeight: NSLayoutConstraint!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -31,10 +35,14 @@ class QuestionViewController: ViewController {
         let remarksWhenAnswerCorrect = ["Bingo!", "Nailed it.", "Correct!"].shuffled()
         let remarksWhenAnswerWrong = ["Wrong!", "Not quite.", "Nope."].shuffled()
         
+        okBtn.isEnabled = false
+        continueBtn.isHidden = false
+        
         if let selectedOption = selectedOption {
+            selectedOptions.append(selectedOption)
+            
             if currentQuestion.answer == Character(letterChoices[selectedOption]) {
                 remark = remarksWhenAnswerCorrect[0]
-                score += 1
             }
             else {
                 remark = remarksWhenAnswerWrong[0]
@@ -49,30 +57,48 @@ class QuestionViewController: ViewController {
         recyclingInfo.append(recyclingInfoTwo)
         recyclingInfoLabel?.attributedText = recyclingInfo
         
-        continueBtn.isHidden = false
-        
         tableView.reloadData()
+        
+        if let selectedOption = selectedOption, let pos = UITableView.ScrollPosition(rawValue: 0) {
+            let indexPath = IndexPath(row: selectedOption, section: 0)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: pos)
+        }
     }
     
     @IBAction func continueClicked(_ sender: Any) {
-        let randomInt = Int.random(in: 0..<5)
+        let questionViewController = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewController") as? QuestionViewController
+
+
+        questionViewController?.qIndeces = qIndeces
+        questionViewController?.score = score
+        questionViewController?.questions = questions
+        questionViewController?.selectedOptions = selectedOptions
+        
+        if let selectedOption = selectedOption {
+            if currentQuestion.answer == Character(letterChoices[selectedOption]) {
+                questionViewController?.score = score + 1
+            }
+        }
         
         if questionNum == 3 {
-            if let resultViewController = self.storyboard?.instantiateViewController(withIdentifier: "ResultViewController") as? ResultViewController {
-                self.navigationController?.pushViewController(resultViewController, animated: true)
-                
-                resultViewController.score = score
-                
+            showAlert(withTitle:"", withMessage: "Are you sure you want to submit?") {
+                if let resultViewController = self.storyboard?.instantiateViewController(withIdentifier: "ResultViewController") as? ResultViewController {
+                    self.navigationController?.pushViewController(resultViewController, animated: true)
+    
+                    resultViewController.score = questionViewController!.score
+                    resultViewController.qIndeces = self.qIndeces
+                    resultViewController.questions = self.questions
+                    resultViewController.selectedOptions = self.selectedOptions
+                }
             }
-            
             return
         }
         
-        if let questionViewController = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewController") as? QuestionViewController {
-            self.navigationController?.pushViewController(questionViewController, animated: true)
-            
-            questionViewController.currentQuestion = questions[randomInt]
-            questionViewController.questionNum = questionNum + 1
+        if questionViewController != nil {
+            self.navigationController?.pushViewController(questionViewController!, animated: true)
+
+            questionViewController?.questionNum = questionNum + 1
+            questionViewController?.currentQuestion = questions[qIndeces[questionNum]]
             
         }
     }
@@ -84,7 +110,7 @@ class QuestionViewController: ViewController {
         tableView.register(questionNib, forCellReuseIdentifier: "QuestionTableViewCell")
         
         // Do any additional setup after loading the view.
-        questionLabel?.text = "Q\(questionNum). \(currentQuestion.questionText ?? "")"
+        questionLabel?.text = "\(questionNum) - \(currentQuestion.questionText ?? "")"
         questionLabel?.numberOfLines = 0
         
         questionUIImage.image = currentQuestion.questionImage
@@ -96,6 +122,9 @@ class QuestionViewController: ViewController {
         
         recyclingInfoLabel?.numberOfLines = 0
         
+        progressViewLabel?.text = "\(questionNum) of 3"
+        progressView.setProgress(Float(Double(questionNum) * 0.33), animated: true)
+        
         if currentQuestion.questionImage == nil {
             questionUIImageHeight.constant = 0
             tableViewHeight.constant = 430
@@ -103,6 +132,10 @@ class QuestionViewController: ViewController {
     
         if questionNum == 1 {
             navigationItem.hidesBackButton = true
+        }
+        
+        if questionNum == 3 {
+            continueBtn?.setTitle("Submit", for: .normal)
         }
         
     }
@@ -130,7 +163,10 @@ extension QuestionViewController : UITableViewDelegate, UITableViewDataSource {
         }
         
         if let selectedOption = selectedOption {
+            cell?.isUserInteractionEnabled = false
+
             if selectedOption == indexPath.row {
+                cell?.setSelected(true, animated: false)
                 if currentQuestion.answer == Character(letterChoices[selectedOption]) {
                     cell?.answerIconImage?.image = UIImage(systemName: "checkmark")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
                 }
@@ -147,19 +183,17 @@ extension QuestionViewController : UITableViewDelegate, UITableViewDataSource {
         return cell ?? UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
-    {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let verticalPadding: CGFloat = 8
 
         let maskLayer = CALayer()
-        maskLayer.cornerRadius = 5   //if you want round edges
+        maskLayer.cornerRadius = 5
         maskLayer.backgroundColor = UIColor.black.cgColor
         maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
         cell.layer.mask = maskLayer
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         selectedOption = indexPath.row
     }
 

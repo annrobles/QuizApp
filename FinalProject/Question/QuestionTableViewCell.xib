@@ -101,7 +101,7 @@
                 <outlet property="optionLabel" destination="GwY-iF-inT" id="ot6-pk-mhM"/>
                 <outlet property="optionLetterLabel" destination="sTj-3t-OWl" id="jFj-xt-Udh"/>
             </connections>
-            <point key="canvasLocation" x="-21.538461538461537" y="69.66824644549763"/>
+            <point key="canvasLocation" x="297" y="48"/>
         </tableViewCell>
     </objects>
     <resources>

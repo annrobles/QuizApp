@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		706788892909D5EE0040F8DE /* QuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706788872909D5EE0040F8DE /* QuestionTableViewCell.swift */; };
 		7067888A2909D5EE0040F8DE /* QuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706788882909D5EE0040F8DE /* QuestionTableViewCell.xib */; };
+		70991CE0290B03DF008ADA47 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70991CDF290B03DF008ADA47 /* Utils.swift */; };
+		70991CE3290B1480008ADA47 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70991CE1290B1480008ADA47 /* ResultTableViewCell.swift */; };
+		70991CE4290B1480008ADA47 /* ResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70991CE2290B1480008ADA47 /* ResultTableViewCell.xib */; };
 		70AB12DB2906C174009817D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB12DA2906C174009817D9 /* AppDelegate.swift */; };
 		70AB12DD2906C174009817D9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB12DC2906C174009817D9 /* SceneDelegate.swift */; };
 		70AB12DF2906C174009817D9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB12DE2906C174009817D9 /* ViewController.swift */; };
@@ -21,7 +24,6 @@
 		70AB130B29077114009817D9 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB130A29077114009817D9 /* Question.swift */; };
 		70AB130F2908C91C009817D9 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB130E2908C91C009817D9 /* QuestionViewController.swift */; };
 		70AB13122908D25D009817D9 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB13112908D25D009817D9 /* ResultViewController.swift */; };
-		70AB13142908D5D3009817D9 /* ResultDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AB13132908D5D3009817D9 /* ResultDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,9 @@
 /* Begin PBXFileReference section */
 		706788872909D5EE0040F8DE /* QuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionTableViewCell.swift; path = FinalProject/Question/QuestionTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		706788882909D5EE0040F8DE /* QuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = QuestionTableViewCell.xib; path = FinalProject/Question/QuestionTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		70991CDF290B03DF008ADA47 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		70991CE1290B1480008ADA47 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
+		70991CE2290B1480008ADA47 /* ResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultTableViewCell.xib; sourceTree = "<group>"; };
 		70AB12D72906C174009817D9 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AB12DA2906C174009817D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70AB12DC2906C174009817D9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,7 +65,6 @@
 		70AB130A29077114009817D9 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		70AB130E2908C91C009817D9 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		70AB13112908D25D009817D9 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		70AB13132908D5D3009817D9 /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,7 @@
 		7067888B2909F1670040F8DE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70991CDF290B03DF008ADA47 /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -172,7 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				70AB13112908D25D009817D9 /* ResultViewController.swift */,
-				70AB13132908D5D3009817D9 /* ResultDetailViewController.swift */,
+				70991CE1290B1480008ADA47 /* ResultTableViewCell.swift */,
+				70991CE2290B1480008ADA47 /* ResultTableViewCell.xib */,
 			);
 			path = Result;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70991CE4290B1480008ADA47 /* ResultTableViewCell.xib in Resources */,
 				70AB12E72906C175009817D9 /* LaunchScreen.storyboard in Resources */,
 				7067888A2909D5EE0040F8DE /* QuestionTableViewCell.xib in Resources */,
 				70AB12E42906C175009817D9 /* Assets.xcassets in Resources */,
@@ -311,11 +318,12 @@
 			files = (
 				70AB12DF2906C174009817D9 /* ViewController.swift in Sources */,
 				706788892909D5EE0040F8DE /* QuestionTableViewCell.swift in Sources */,
+				70991CE0290B03DF008ADA47 /* Utils.swift in Sources */,
 				70AB130F2908C91C009817D9 /* QuestionViewController.swift in Sources */,
-				70AB13142908D5D3009817D9 /* ResultDetailViewController.swift in Sources */,
 				70AB130B29077114009817D9 /* Question.swift in Sources */,
 				70AB12DB2906C174009817D9 /* AppDelegate.swift in Sources */,
 				70AB12DD2906C174009817D9 /* SceneDelegate.swift in Sources */,
+				70991CE3290B1480008ADA47 /* ResultTableViewCell.swift in Sources */,
 				70AB13122908D25D009817D9 /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
