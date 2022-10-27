@@ -220,6 +220,9 @@
                         <viewLayoutGuide key="safeArea" id="cGa-xH-dyN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="retakeBtn" destination="dkf-Vd-37A" id="PaU-Dc-vje"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K0j-Mt-sJ3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

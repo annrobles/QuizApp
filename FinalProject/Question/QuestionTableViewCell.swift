@@ -10,6 +10,7 @@ import UIKit
 class QuestionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var optionImage: UIImageView!
+    @IBOutlet weak var answerIconImage: UIImageView!
     @IBOutlet weak var optionLetterLabel: UILabel!
     @IBOutlet weak var optionLabel: UILabel!
     @IBOutlet weak var optionImageHeight: NSLayoutConstraint!

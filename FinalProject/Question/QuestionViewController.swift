@@ -12,6 +12,7 @@ class QuestionViewController: ViewController {
     var questionNum = 0
     var currentQuestion = Question()
     var selectedOption: Int?
+    var score = 0
     
     let letterChoices = ["A", "B", "C", "D"]
     
@@ -33,6 +34,7 @@ class QuestionViewController: ViewController {
         if let selectedOption = selectedOption {
             if currentQuestion.answer == Character(letterChoices[selectedOption]) {
                 remark = remarksWhenAnswerCorrect[0]
+                score += 1
             }
             else {
                 remark = remarksWhenAnswerWrong[0]
@@ -49,7 +51,7 @@ class QuestionViewController: ViewController {
         
         continueBtn.isHidden = false
         
-        //tableView.reloadData()
+        tableView.reloadData()
     }
     
     @IBAction func continueClicked(_ sender: Any) {
@@ -59,7 +61,10 @@ class QuestionViewController: ViewController {
             if let resultViewController = self.storyboard?.instantiateViewController(withIdentifier: "ResultViewController") as? ResultViewController {
                 self.navigationController?.pushViewController(resultViewController, animated: true)
                 
+                resultViewController.score = score
+                
             }
+            
             return
         }
         
@@ -113,6 +118,10 @@ extension QuestionViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionTableViewCell", for: indexPath) as? QuestionTableViewCell
         
+        cell?.optionLetterLabel?.text = letterChoices[indexPath.row]
+        
+        cell?.optionLabel?.text = currentQuestion.options?[indexPath.row]
+        
         if currentQuestion.optionImage?[indexPath.row] == nil, cell?.optionImageHeight != nil {
             cell?.optionImageHeight.constant = 0
         }
@@ -120,9 +129,20 @@ extension QuestionViewController : UITableViewDelegate, UITableViewDataSource {
             cell?.optionImage?.image = currentQuestion.optionImage?[indexPath.row]
         }
         
-        cell?.optionLetterLabel?.text = letterChoices[indexPath.row]
-        
-        cell?.optionLabel?.text = currentQuestion.options?[indexPath.row]
+        if let selectedOption = selectedOption {
+            if selectedOption == indexPath.row {
+                if currentQuestion.answer == Character(letterChoices[selectedOption]) {
+                    cell?.answerIconImage?.image = UIImage(systemName: "checkmark")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
+                }
+                else {
+                    cell?.answerIconImage?.image = UIImage(systemName: "xmark")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+                }
+            }
+            
+            if currentQuestion.answer == Character(letterChoices[indexPath.row]) {
+                cell?.answerIconImage?.image = UIImage(systemName: "checkmark")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
+            }
+        }
         
         return cell ?? UITableViewCell()
     }
